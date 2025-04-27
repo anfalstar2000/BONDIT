@@ -85,47 +85,47 @@ export default function DigitalCardPage() {
           <span className="mr-2 text-gray-500">جاري التحميل...</span>
         </div>
       ) : (
-        <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
-          <CardContent className="p-0">
-            <Tabs defaultValue="preview" value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <div className="border-b">
-                <div className="px-6 flex justify-end">
-                  <TabsList className="bg-transparent border-b-0 h-14 p-0 gap-8">
-                    <TabsTrigger
-                      value="preview"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0 transition-colors"
-                    >
-                      معاينة البطاقة
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="settings"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0 transition-colors"
-                    >
-                      إعدادات البطاقة
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="analytics"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0 transition-colors"
-                    >
-                      إحصائيات البطاقة
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
+      <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
+        <CardContent className="p-0">
+          <Tabs defaultValue="preview" value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <div className="border-b">
+              <div className="px-6 flex justify-end">
+                <TabsList className="bg-transparent border-b-0 h-14 p-0 gap-8">
+                  <TabsTrigger
+                    value="preview"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0 transition-colors"
+                  >
+                    معاينة البطاقة
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="settings"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0 transition-colors"
+                  >
+                    إعدادات البطاقة
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="analytics"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0 transition-colors"
+                  >
+                    إحصائيات البطاقة
+                  </TabsTrigger>
+                </TabsList>
               </div>
-              <div className="p-6">
-                <TabsContent value="preview" className="mt-0">
+            </div>
+            <div className="p-6">
+              <TabsContent value="preview" className="mt-0">
                   <DigitalCardPreview cardData={digitalCard} />
-                </TabsContent>
-                <TabsContent value="settings" className="mt-0">
+              </TabsContent>
+              <TabsContent value="settings" className="mt-0">
                   <DigitalCardSettings cardData={digitalCard} />
-                </TabsContent>
-                <TabsContent value="analytics" className="mt-0">
+              </TabsContent>
+              <TabsContent value="analytics" className="mt-0">
                   <DigitalCardAnalytics cardData={digitalCard} activityData={cardActivity} />
-                </TabsContent>
-              </div>
-            </Tabs>
-          </CardContent>
-        </Card>
+              </TabsContent>
+            </div>
+          </Tabs>
+        </CardContent>
+      </Card>
       )}
     </div>
   )

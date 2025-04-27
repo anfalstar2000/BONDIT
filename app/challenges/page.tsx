@@ -294,71 +294,71 @@ export default function ChallengesPage() {
         </div>
       ) : (
         <>
-          {/* Estadísticas */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-sm font-medium text-gray-500 text-right">التحديات النشطة</h3>
-                  <div className="bg-blue-50 p-2 rounded-full">
-                    <Trophy className="h-5 w-5 text-blue-500" />
-                  </div>
-                </div>
+      {/* Estadísticas */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+        <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <h3 className="text-sm font-medium text-gray-500 text-right">التحديات النشطة</h3>
+              <div className="bg-blue-50 p-2 rounded-full">
+                <Trophy className="h-5 w-5 text-blue-500" />
+              </div>
+            </div>
                 <p className="text-3xl font-bold mt-2 text-right">{activeChallenges}</p>
-                <div className="flex items-center mt-2">
-                  <span className="text-sm text-green-500">+1</span>
-                  <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex items-center mt-2">
+              <span className="text-sm text-green-500">+1</span>
+              <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+            </div>
+          </CardContent>
+        </Card>
 
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-sm font-medium text-gray-500 text-right">إجمالي المشاركين</h3>
-                  <div className="bg-green-50 p-2 rounded-full">
-                    <Users className="h-5 w-5 text-green-500" />
-                  </div>
-                </div>
+        <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <h3 className="text-sm font-medium text-gray-500 text-right">إجمالي المشاركين</h3>
+              <div className="bg-green-50 p-2 rounded-full">
+                <Users className="h-5 w-5 text-green-500" />
+              </div>
+            </div>
                 <p className="text-3xl font-bold mt-2 text-right">{totalParticipants}</p>
-                <div className="flex items-center mt-2">
-                  <span className="text-sm text-green-500">+15%</span>
-                  <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex items-center mt-2">
+              <span className="text-sm text-green-500">+15%</span>
+              <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+            </div>
+          </CardContent>
+        </Card>
 
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-sm font-medium text-gray-500 text-right">معدل الإكمال</h3>
-                  <div className="bg-purple-50 p-2 rounded-full">
-                    <Trophy className="h-5 w-5 text-purple-500" />
-                  </div>
-                </div>
+        <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <h3 className="text-sm font-medium text-gray-500 text-right">معدل الإكمال</h3>
+              <div className="bg-purple-50 p-2 rounded-full">
+                <Trophy className="h-5 w-5 text-purple-500" />
+              </div>
+            </div>
                 <p className="text-3xl font-bold mt-2 text-right">{avgCompletionRate}%</p>
-                <div className="flex items-center mt-2">
-                  <span className="text-sm text-green-500">+5%</span>
-                  <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex items-center mt-2">
+              <span className="text-sm text-green-500">+5%</span>
+              <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+            </div>
+          </CardContent>
+        </Card>
 
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-sm font-medium text-gray-500 text-right">التحديات القادمة</h3>
-                  <div className="bg-amber-50 p-2 rounded-full">
-                    <Calendar className="h-5 w-5 text-amber-500" />
-                  </div>
-                </div>
+        <Card className="bg-white shadow-sm hover:shadow-md transition-shadow rounded-3xl border border-gray-100">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <h3 className="text-sm font-medium text-gray-500 text-right">التحديات القادمة</h3>
+              <div className="bg-amber-50 p-2 rounded-full">
+                <Calendar className="h-5 w-5 text-amber-500" />
+              </div>
+            </div>
                 <p className="text-3xl font-bold mt-2 text-right">{upcomingChallenges}</p>
-                <div className="flex items-center mt-2">
-                  <span className="text-sm text-gray-500">سيتم إطلاقها قريباً</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+            <div className="flex items-center mt-2">
+              <span className="text-sm text-gray-500">سيتم إطلاقها قريباً</span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
           {/* Lista de desafíos */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">

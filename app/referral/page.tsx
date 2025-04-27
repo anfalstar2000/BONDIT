@@ -210,7 +210,7 @@ export default function ReferralPage() {
     }
 
     const filtered = uiReferrals.filter(
-      (referral) =>
+    (referral) =>
         referral.referrer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         referral.referrer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         referral.referred.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -259,98 +259,98 @@ export default function ReferralPage() {
           <div className="text-gray-500">جاري التحميل...</div>
         </div>
       ) : (
-        <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
-          <CardContent className="p-0">
-            <Tabs defaultValue="statistics" value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <div className="border-b">
-                <div className="px-6 flex justify-end">
-                  <TabsList className="bg-transparent border-b-0 h-14 p-0 gap-8">
-                    <TabsTrigger
-                      value="statistics"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
-                    >
-                      الإحصائيات
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="referrals"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
-                    >
-                      الإحالات
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="settings"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
-                    >
-                      الإعدادات
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
+      <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
+        <CardContent className="p-0">
+          <Tabs defaultValue="statistics" value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <div className="border-b">
+              <div className="px-6 flex justify-end">
+                <TabsList className="bg-transparent border-b-0 h-14 p-0 gap-8">
+                  <TabsTrigger
+                    value="statistics"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
+                  >
+                    الإحصائيات
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="referrals"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
+                  >
+                    الإحالات
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="settings"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
+                  >
+                    الإعدادات
+                  </TabsTrigger>
+                </TabsList>
               </div>
-              <div className="p-6 text-right" dir="rtl">
-                <TabsContent value="statistics" className="mt-0">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between items-start">
-                          <h3 className="text-sm font-medium text-gray-500 text-right">إجمالي الإحالات</h3>
-                          <div className="bg-blue-50 p-2 rounded-full">
-                            <Link className="h-5 w-5 text-blue-500" />
-                          </div>
+            </div>
+            <div className="p-6 text-right" dir="rtl">
+              <TabsContent value="statistics" className="mt-0">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-sm font-medium text-gray-500 text-right">إجمالي الإحالات</h3>
+                        <div className="bg-blue-50 p-2 rounded-full">
+                          <Link className="h-5 w-5 text-blue-500" />
                         </div>
+                      </div>
                         <p className="text-3xl font-bold mt-2">{totalReferrals}</p>
-                        <div className="flex items-center mt-2">
-                          <span className="text-sm text-green-500">+12%</span>
-                          <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+                      <div className="flex items-center mt-2">
+                        <span className="text-sm text-green-500">+12%</span>
+                        <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-sm font-medium text-gray-500 text-right">العملاء الجدد</h3>
+                        <div className="bg-green-50 p-2 rounded-full">
+                          <Users className="h-5 w-5 text-green-500" />
                         </div>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between items-start">
-                          <h3 className="text-sm font-medium text-gray-500 text-right">العملاء الجدد</h3>
-                          <div className="bg-green-50 p-2 rounded-full">
-                            <Users className="h-5 w-5 text-green-500" />
-                          </div>
-                        </div>
+                      </div>
                         <p className="text-3xl font-bold mt-2">{completedReferrals}</p>
-                        <div className="flex items-center mt-2">
-                          <span className="text-sm text-green-500">+8%</span>
-                          <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+                      <div className="flex items-center mt-2">
+                        <span className="text-sm text-green-500">+8%</span>
+                        <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-sm font-medium text-gray-500 text-right">النقاط الممنوحة</h3>
+                        <div className="bg-purple-50 p-2 rounded-full">
+                          <svg
+                            className="h-5 w-5 text-purple-500"
+                            fill="none"
+                            height="24"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                            <line x1="9" x2="9.01" y1="9" y2="9" />
+                            <line x1="15" x2="15.01" y1="9" y2="9" />
+                          </svg>
                         </div>
-                      </CardContent>
-                    </Card>
-                    <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between items-start">
-                          <h3 className="text-sm font-medium text-gray-500 text-right">النقاط الممنوحة</h3>
-                          <div className="bg-purple-50 p-2 rounded-full">
-                            <svg
-                              className="h-5 w-5 text-purple-500"
-                              fill="none"
-                              height="24"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              viewBox="0 0 24 24"
-                              width="24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <circle cx="12" cy="12" r="10" />
-                              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                              <line x1="9" x2="9.01" y1="9" y2="9" />
-                              <line x1="15" x2="15.01" y1="9" y2="9" />
-                            </svg>
-                          </div>
-                        </div>
+                      </div>
                         <p className="text-3xl font-bold mt-2">{totalRewardPoints || 0}</p>
-                        <div className="flex items-center mt-2">
-                          <span className="text-sm text-green-500">+15%</span>
-                          <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
+                      <div className="flex items-center mt-2">
+                        <span className="text-sm text-green-500">+15%</span>
+                        <span className="text-sm text-gray-500 mr-1">مقارنة بالشهر السابق</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
 
                   {/* Referral Program Info */}
                   {referralProgram && (
@@ -399,111 +399,111 @@ export default function ReferralPage() {
                     </div>
                   )}
 
-                  {/* Gráfico o visualización de estadísticas */}
-                  <div className="bg-white border rounded-lg p-6 mb-6">
-                    <h3 className="text-lg font-medium mb-4 text-right">تطور الإحالات</h3>
-                    <div className="h-64 flex items-center justify-center">
-                      <div className="w-full h-full flex items-end justify-between">
-                        {Array.from({ length: 12 }).map((_, index) => (
-                          <div key={index} className="flex flex-col items-center">
-                            <div
-                              className="w-8 bg-blue-500 rounded-t-md"
-                              style={{
-                                height: `${Math.floor(Math.random() * 150) + 20}px`,
-                              }}
-                            ></div>
-                            <div className="text-xs text-gray-500 mt-2">
-                              {
-                                [
-                                  "يناير",
-                                  "فبراير",
-                                  "مارس",
-                                  "أبريل",
-                                  "مايو",
-                                  "يونيو",
-                                  "يوليو",
-                                  "أغسطس",
-                                  "سبتمبر",
-                                  "أكتوبر",
-                                  "نوفمبر",
-                                  "ديسمبر",
-                                ][index]
-                              }
-                            </div>
+                {/* Gráfico o visualización de estadísticas */}
+                <div className="bg-white border rounded-lg p-6 mb-6">
+                  <h3 className="text-lg font-medium mb-4 text-right">تطور الإحالات</h3>
+                  <div className="h-64 flex items-center justify-center">
+                    <div className="w-full h-full flex items-end justify-between">
+                      {Array.from({ length: 12 }).map((_, index) => (
+                        <div key={index} className="flex flex-col items-center">
+                          <div
+                            className="w-8 bg-blue-500 rounded-t-md"
+                            style={{
+                              height: `${Math.floor(Math.random() * 150) + 20}px`,
+                            }}
+                          ></div>
+                          <div className="text-xs text-gray-500 mt-2">
+                            {
+                              [
+                                "يناير",
+                                "فبراير",
+                                "مارس",
+                                "أبريل",
+                                "مايو",
+                                "يونيو",
+                                "يوليو",
+                                "أغسطس",
+                                "سبتمبر",
+                                "أكتوبر",
+                                "نوفمبر",
+                                "ديسمبر",
+                              ][index]
+                            }
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </TabsContent>
+                </div>
+              </TabsContent>
 
                 <TabsContent value="referrals" className="mt-0">
                   <div className="bg-white border rounded-md overflow-hidden">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-gray-50">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-gray-50">
                           <TableHead className="text-right">المُحيل</TableHead>
                           <TableHead className="text-right">المُحال</TableHead>
                           <TableHead className="text-right">التاريخ</TableHead>
                           <TableHead className="text-right">الحالة</TableHead>
                           <TableHead className="text-right">المكافأة</TableHead>
                           <TableHead className="text-right">الإجراءات</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {filteredReferrals.length > 0 ? (
                           filteredReferrals.map((referral) => (
                             <TableRow key={referral.id} className="hover:bg-gray-50">
-                              <TableCell>
+                          <TableCell>
                                 <div className="flex items-center gap-3">
-                                  <Avatar className="h-8 w-8">
+                              <Avatar className="h-8 w-8">
                                     <AvatarImage src={referral.referrer.avatar} />
-                                    <AvatarFallback>{referral.referrer.name.charAt(0)}</AvatarFallback>
-                                  </Avatar>
-                                  <div>
-                                    <div className="font-medium">{referral.referrer.name}</div>
-                                    <div className="text-sm text-gray-500">{referral.referrer.email}</div>
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell>
+                                <AvatarFallback>{referral.referrer.name.charAt(0)}</AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="font-medium">{referral.referrer.name}</div>
+                                <div className="text-sm text-gray-500">{referral.referrer.email}</div>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
                                 <div className="flex items-center gap-3">
-                                  <Avatar className="h-8 w-8">
+                              <Avatar className="h-8 w-8">
                                     <AvatarImage src={referral.referred.avatar} />
-                                    <AvatarFallback>{referral.referred.name.charAt(0)}</AvatarFallback>
-                                  </Avatar>
-                                  <div>
-                                    <div className="font-medium">{referral.referred.name}</div>
-                                    <div className="text-sm text-gray-500">{referral.referred.email}</div>
-                                  </div>
-                                </div>
-                              </TableCell>
+                                <AvatarFallback>{referral.referred.name.charAt(0)}</AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="font-medium">{referral.referred.name}</div>
+                                <div className="text-sm text-gray-500">{referral.referred.email}</div>
+                              </div>
+                            </div>
+                          </TableCell>
                               <TableCell>{referral.date}</TableCell>
                               <TableCell>
-                                <Badge
+                            <Badge
                                   className={`${
-                                    referral.status === "مكتمل"
-                                      ? "bg-green-100 text-green-800"
-                                      : referral.status === "معلق"
+                                referral.status === "مكتمل"
+                                  ? "bg-green-100 text-green-800"
+                                  : referral.status === "معلق"
                                       ? "bg-yellow-100 text-yellow-800"
-                                      : "bg-red-100 text-red-800"
+                                    : "bg-red-100 text-red-800"
                                   }`}
-                                >
-                                  {referral.status}
-                                </Badge>
-                              </TableCell>
+                            >
+                              {referral.status}
+                            </Badge>
+                          </TableCell>
                               <TableCell>{referral.reward}</TableCell>
                               <TableCell>
                                 <div className="flex gap-2">
                                   <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                    <Edit className="h-4 w-4" />
-                                  </Button>
+                                <Edit className="h-4 w-4" />
+                              </Button>
                                   <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
-                                    <Trash className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </TableCell>
-                            </TableRow>
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
                           ))
                         ) : (
                           <TableRow>
@@ -512,29 +512,29 @@ export default function ReferralPage() {
                             </TableCell>
                           </TableRow>
                         )}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </TabsContent>
+                    </TableBody>
+                  </Table>
+                </div>
+              </TabsContent>
 
                 <TabsContent value="settings" className="mt-0">
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-lg font-medium mb-4">إعدادات البرنامج</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-4">
-                          <div className="flex justify-between items-center">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-medium mb-4">إعدادات البرنامج</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
                             <Label htmlFor="program-enabled">تفعيل برنامج الإحالة</Label>
                             <Switch id="program-enabled" defaultChecked />
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <Label htmlFor="auto-reward">منح المكافآت تلقائياً</Label>
-                            <Switch id="auto-reward" defaultChecked />
-                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <Label htmlFor="auto-reward">منح المكافآت تلقائياً</Label>
+                          <Switch id="auto-reward" defaultChecked />
+                        </div>
                           <div className="flex justify-between items-center">
                             <Label htmlFor="notifications">إرسال إشعارات للإحالات الجديدة</Label>
                             <Switch id="notifications" defaultChecked />
-                          </div>
+                      </div>
                         </div>
                         <div className="space-y-4">
                           <div className="space-y-2">
@@ -568,14 +568,14 @@ export default function ReferralPage() {
                       </div>
                     </div>
                     <div className="flex justify-end">
-                      <Button className="bg-blue-500 hover:bg-blue-600 transition-colors">حفظ الإعدادات</Button>
-                    </div>
+                    <Button className="bg-blue-500 hover:bg-blue-600 transition-colors">حفظ الإعدادات</Button>
                   </div>
-                </TabsContent>
-              </div>
-            </Tabs>
-          </CardContent>
-        </Card>
+                </div>
+              </TabsContent>
+            </div>
+          </Tabs>
+        </CardContent>
+      </Card>
       )}
     </div>
   )

@@ -134,44 +134,44 @@ export default function PointsRewardsPage() {
         </div>
       ) : (
         /* Tabs */
-        <Tabs defaultValue="rules" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="bg-transparent border-b h-14 p-0 gap-8 mb-6 w-full justify-start">
-            <TabsTrigger
-              value="rules"
-              className="text-gray-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 h-14 px-0 pb-0 font-medium"
-            >
-              قواعد النقاط
-            </TabsTrigger>
-            <TabsTrigger
-              value="rewards"
-              className="text-gray-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 h-14 px-0 pb-0 font-medium"
-            >
-              المكافآت
-            </TabsTrigger>
-            <TabsTrigger
-              value="history"
-              className="text-gray-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 h-14 px-0 pb-0 font-medium"
-            >
-              سجل النقاط
-            </TabsTrigger>
-          </TabsList>
+      <Tabs defaultValue="rules" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="bg-transparent border-b h-14 p-0 gap-8 mb-6 w-full justify-start">
+          <TabsTrigger
+            value="rules"
+            className="text-gray-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 h-14 px-0 pb-0 font-medium"
+          >
+            قواعد النقاط
+          </TabsTrigger>
+          <TabsTrigger
+            value="rewards"
+            className="text-gray-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 h-14 px-0 pb-0 font-medium"
+          >
+            المكافآت
+          </TabsTrigger>
+          <TabsTrigger
+            value="history"
+            className="text-gray-500 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 h-14 px-0 pb-0 font-medium"
+          >
+            سجل النقاط
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="rules" className="mt-0">
-            <PointsRules />
-          </TabsContent>
+        <TabsContent value="rules" className="mt-0">
+          <PointsRules />
+        </TabsContent>
 
-          <TabsContent value="rewards" className="mt-0">
+        <TabsContent value="rewards" className="mt-0">
             <RewardsSettings 
               searchTerm={searchTerm} 
               onEditReward={handleEditReward}
               rewards={pointsRewards} 
             />
-          </TabsContent>
+        </TabsContent>
 
-          <TabsContent value="history" className="mt-0">
-            <PointsHistory searchTerm={searchTerm} />
-          </TabsContent>
-        </Tabs>
+        <TabsContent value="history" className="mt-0">
+          <PointsHistory searchTerm={searchTerm} />
+        </TabsContent>
+      </Tabs>
       )}
 
       <AddRewardForm isOpen={isAddRewardOpen} onClose={() => setIsAddRewardOpen(false)} onSave={handleAddRewardSave} />

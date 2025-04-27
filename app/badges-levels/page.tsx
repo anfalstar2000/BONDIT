@@ -301,47 +301,47 @@ export default function BadgesLevelsPage() {
           <div className="text-gray-500">جاري التحميل...</div>
         </div>
       ) : (
-        <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
-          <CardContent className="p-0">
-            <Tabs defaultValue="levels" value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <div className="border-b">
-                <div className="px-6 flex justify-end">
-                  <TabsList className="bg-transparent border-b-0 h-14 p-0 gap-8">
-                    <TabsTrigger
-                      value="levels"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
-                    >
-                      المستويات
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="badges"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
-                    >
-                      الشارات
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="settings"
-                      className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
-                    >
-                      الإعدادات
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
+      <Card className="bg-white shadow-sm rounded-3xl border border-gray-100">
+        <CardContent className="p-0">
+          <Tabs defaultValue="levels" value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <div className="border-b">
+              <div className="px-6 flex justify-end">
+                <TabsList className="bg-transparent border-b-0 h-14 p-0 gap-8">
+                  <TabsTrigger
+                    value="levels"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
+                  >
+                    المستويات
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="badges"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
+                  >
+                    الشارات
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="settings"
+                    className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-500 data-[state=active]:shadow-none bg-transparent h-14 px-0"
+                  >
+                    الإعدادات
+                  </TabsTrigger>
+                </TabsList>
               </div>
-              <div className="p-6 text-right" dir="rtl">
-                <TabsContent value="levels" className="mt-0">
-                  <div className="border rounded-md overflow-hidden">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-gray-50">
-                          <TableHead className="text-right font-medium">اسم المستوى</TableHead>
-                          <TableHead className="text-right font-medium">النقاط المطلوبة</TableHead>
-                          <TableHead className="text-right font-medium">المزايا</TableHead>
-                          <TableHead className="text-right font-medium">عدد العملاء</TableHead>
-                          <TableHead className="text-right font-medium">الإجراءات</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
+            </div>
+            <div className="p-6 text-right" dir="rtl">
+              <TabsContent value="levels" className="mt-0">
+                <div className="border rounded-md overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-gray-50">
+                        <TableHead className="text-right font-medium">اسم المستوى</TableHead>
+                        <TableHead className="text-right font-medium">النقاط المطلوبة</TableHead>
+                        <TableHead className="text-right font-medium">المزايا</TableHead>
+                        <TableHead className="text-right font-medium">عدد العملاء</TableHead>
+                        <TableHead className="text-right font-medium">الإجراءات</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {filteredLevels.map((level) => (
                           <TableRow key={level.id} className="hover:bg-gray-50">
                             <TableCell className="font-medium">
@@ -351,41 +351,41 @@ export default function BadgesLevelsPage() {
                                   style={{ backgroundColor: level.id === 1 ? "#CD7F32" : level.id === 2 ? "#C0C0C0" : level.id === 3 ? "#FFD700" : "#E5E4E2" }}
                                 ></div>
                                 {level.name}
-                              </div>
-                            </TableCell>
+                            </div>
+                          </TableCell>
                             <TableCell>{level.pointsRequired}</TableCell>
                             <TableCell>{level.benefits.join(', ')}</TableCell>
                             <TableCell>{level.customers || 0}</TableCell>
                             <TableCell>
                               <div className="flex gap-2">
                                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-500">
-                                  <Edit className="h-4 w-4" />
-                                </Button>
+                                <Edit className="h-4 w-4" />
+                              </Button>
                                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
-                                  <Trash className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </TabsContent>
-                <TabsContent value="badges" className="mt-0">
-                  <div className="border rounded-md overflow-hidden">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-gray-50">
-                          <TableHead className="text-right font-medium">اسم الشارة</TableHead>
-                          <TableHead className="text-right font-medium">الوصف</TableHead>
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </TabsContent>
+              <TabsContent value="badges" className="mt-0">
+                <div className="border rounded-md overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-gray-50">
+                        <TableHead className="text-right font-medium">اسم الشارة</TableHead>
+                        <TableHead className="text-right font-medium">الوصف</TableHead>
                           <TableHead className="text-right font-medium">الندرة</TableHead>
                           <TableHead className="text-right font-medium">الحالة</TableHead>
-                          <TableHead className="text-right font-medium">عدد العملاء</TableHead>
-                          <TableHead className="text-right font-medium">الإجراءات</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
+                        <TableHead className="text-right font-medium">عدد العملاء</TableHead>
+                        <TableHead className="text-right font-medium">الإجراءات</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {filteredBadges.map((badge) => (
                           <TableRow key={badge.id} className="hover:bg-gray-50">
                             <TableCell className="font-medium">
@@ -411,26 +411,26 @@ export default function BadgesLevelsPage() {
                               <span className={`px-2 py-1 rounded-full text-xs ${badge.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"}`}>
                                 {badge.isActive ? "مفعّل" : "معطّل"}
                               </span>
-                            </TableCell>
+                          </TableCell>
                             <TableCell>{badge.customers || 0}</TableCell>
                             <TableCell>
                               <div className="flex gap-2">
                                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-500">
-                                  <Edit className="h-4 w-4" />
-                                </Button>
+                                <Edit className="h-4 w-4" />
+                              </Button>
                                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
-                                  <Trash className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </TabsContent>
-                <TabsContent value="settings" className="mt-0">
-                  <div className="space-y-6">
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </TabsContent>
+              <TabsContent value="settings" className="mt-0">
+                <div className="space-y-6">
                     <h3 className="text-lg font-medium">إعدادات المستويات والشارات</h3>
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-4">
@@ -481,17 +481,17 @@ export default function BadgesLevelsPage() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                        </div>
                     <div className="flex justify-end gap-2 mt-8">
                       <Button variant="outline">إعادة تعيين</Button>
-                      <Button className="bg-blue-500 hover:bg-blue-600 transition-colors">حفظ الإعدادات</Button>
-                    </div>
+                    <Button className="bg-blue-500 hover:bg-blue-600 transition-colors">حفظ الإعدادات</Button>
                   </div>
-                </TabsContent>
-              </div>
-            </Tabs>
-          </CardContent>
-        </Card>
+                </div>
+              </TabsContent>
+            </div>
+          </Tabs>
+        </CardContent>
+      </Card>
       )}
     </div>
   )

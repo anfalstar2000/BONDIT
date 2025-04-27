@@ -1,9 +1,24 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, ArrowUp, ArrowDown, AlertTriangle, Bell, Gift, Award, Target } from "lucide-react"
+import {
+  MoreHorizontal,
+  ChevronRight,
+  ChevronLeft,
+  Search,
+  BarChart3,
+  ArrowUp,
+  ArrowDown,
+  AlertTriangle,
+  Bell,
+  Gift,
+  Award,
+  Target
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { DatePickerWithRange } from "@/components/date-range-picker"
 import { DateSelector } from "@/components/date-selector"
 import { StatCard } from "@/components/stat-card"
 import {
@@ -317,587 +332,244 @@ const campaignSummaryData = [
 ]
 
 export default function Dashboard() {
-  // حالة الواجهة
-  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false)
-  const [activeTab, setActiveTab] = useState("overview")
-  const [selectedTimePeriod, setSelectedTimePeriod] = useState("weekly")
-  const [salesChartPeriod, setSalesChartPeriod] = useState("weekly")
-  const [currentKPIs, setCurrentKPIs] = useState(timePeriodsData.weekly)
-  const [currentChartData, setCurrentChartData] = useState(chartData.weekly)
+  const [dateRange, setDateRange] = useState<{
+    from: Date | undefined
+    to: Date | undefined
+  }>({
+    from: new Date(2025, 6, 20),
+    to: new Date(2025, 6, 28),
+  })
 
-  // حالة الحوارات
-  const [showActionDialog, setShowActionDialog] = useState(false)
-  const [currentAction, setCurrentAction] = useState<any>(null)
-  const [showCampaignDetails, setShowCampaignDetails] = useState(false)
-  const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  // تحديث البيانات عند تغيير الفترة الزمنية
-  useEffect(() => {
-    setCurrentKPIs(timePeriodsData[selectedTimePeriod as keyof typeof timePeriodsData])
-  }, [selectedTimePeriod])
-
-  // تحديث بيانات الرسم البياني عند تغيير الفترة الزمنية
-  useEffect(() => {
-    setCurrentChartData(chartData[salesChartPeriod as keyof typeof chartData])
-  }, [salesChartPeriod])
-
-  // معالجة النقر على زر الإجراء في التنبيهات الذكية
-  const handleAlertAction = (alert: any) => {
-    setCurrentAction({
-      title: `تنفيذ إجراء: ${alert.action}`,
-      description: `معالجة التنبيه: ${alert.title}`,
-      onSubmit: () => handleActionSubmit(),
-    })
-    setShowActionDialog(true)
+  // Dummy data for the dashboard
+  const stats = {
+    totalPoints: "00,000",
+    activeUsers: "000",
+    totalRevenue: "00,000",
+    completedChallenges: "000"
   }
 
-  // معالجة تقديم نموذج الإجراء
-  const handleActionSubmit = () => {
-    setIsSubmitting(true)
-
-    // محاكاة طلب API
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setShowActionDialog(false)
-      alert("تم تنفيذ الإجراء بنجاح")
-    }, 1000)
-  }
-
-  // معالجة النقر على زر الإجراء السريع
-  const handleQuickAction = (actionType: string) => {
-    let actionTitle = ""
-    let actionDescription = ""
-
-    switch (actionType) {
-      case "reward":
-        actionTitle = "إنشاء مكافأة جديدة"
-        actionDescription = "أضف مكافأة جديدة إلى برنامج الولاء"
-        break
-      case "campaign":
-        actionTitle = "إطلاق حملة تسويقية"
-        actionDescription = "إنشاء حملة تسويقية جديدة"
-        break
-      case "challenge":
-        actionTitle = "إضافة تحدي"
-        actionDescription = "إنشاء تحدي جديد للعملاء"
-        break
-      case "notification":
-        actionTitle = "إرسال إشعار"
-        actionDescription = "إرسال إشعار للعملاء"
-        break
-      default:
-        return
-    }
-
-    setCurrentAction({
-      title: actionTitle,
-      description: actionDescription,
-      onSubmit: () => handleActionSubmit(),
-    })
-    setShowActionDialog(true)
-  }
-
-  // معالجة النقر على حملة تسويقية
-  const handleCampaignClick = (campaign: any) => {
-    setSelectedCampaign(campaign)
-    setShowCampaignDetails(true)
-  }
+  // Dummy data for chart
+  const chartData = [
+    { day: "يوليو 28", value: 70 },
+    { day: "يوليو 27", value: 95 },
+    { day: "يوليو 26", value: 60 },
+    { day: "يوليو 25", value: 75 },
+    { day: "يوليو 24", value: 65 },
+    { day: "يوليو 23", value: 80 },
+    { day: "يوليو 22", value: 65 },
+    { day: "يوليو 21", value: 75 },
+    { day: "يوليو 20", value: 60 },
+    { day: "يوليو 7", value: 50 },
+    { day: "يوليو 6", value: 65 },
+    { day: "يوليو 5", value: 55 },
+    { day: "يوليو 4", value: 70 },
+    { day: "يوليو 3", value: 60 },
+    { day: "يوليو 2", value: 75 },
+    { day: "يوليو 1", value: 50 },
+  ]
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen rtl">
-      <div className="mb-4">
-        <div className="bg-white rounded-full p-2 inline-block border border-gray-200">
-          <span className="text-sm text-gray-600">لوحة التحكم</span>
+    <div className="container mx-auto p-6">
+      {/* Header Section */}
+      <div className="flex justify-between items-center mb-8">
+        <div className="flex items-center">
+          <h1 className="text-3xl font-bold text-right">مرحباً بك</h1>
         </div>
-      </div>
-
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-normal text-gray-700">مرحباً بك أنفال التميمي</h1>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" className="rounded-full">
-            <Search className="h-4 w-4 text-gray-500" />
+        <div className="flex items-center space-x-4 space-x-reverse">
+          <div className="relative">
+            <DatePickerWithRange
+              value={dateRange}
+              onChange={setDateRange}
+              className="w-64 rtl"
+            />
+          </div>
+          <Button variant="outline" size="icon" className="rounded-full bg-white">
+            <Search className="h-5 w-5" />
           </Button>
-          <DateSelector />
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6 rtl">
-        <TabsList className="bg-white border border-gray-200 rounded-full">
-          <TabsTrigger
-            value="overview"
-            className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-          >
-            نظرة عامة
-          </TabsTrigger>
-          <TabsTrigger
-            value="points"
-            className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-          >
-            النقاط
-          </TabsTrigger>
-          <TabsTrigger
-            value="customers"
-            className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-          >
-            العملاء
-          </TabsTrigger>
-          <TabsTrigger
-            value="marketing"
-            className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-          >
-            التسويق
-          </TabsTrigger>
-        </TabsList>
-
-        <div className="flex justify-end mb-4">
-          <Tabs value={selectedTimePeriod} onValueChange={setSelectedTimePeriod} className="rtl">
-            <TabsList className="bg-white border border-gray-200 rounded-full">
-              <TabsTrigger
-                value="daily"
-                className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-              >
-                يومي
-              </TabsTrigger>
-              <TabsTrigger
-                value="weekly"
-                className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-              >
-                أسبوعي
-              </TabsTrigger>
-              <TabsTrigger
-                value="monthly"
-                className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-              >
-                شهري
-              </TabsTrigger>
-              <TabsTrigger
-                value="yearly"
-                className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-white data-[state=inactive]:text-gray-600"
-              >
-                سنوي
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+      {/* Main Content */}
+      <div className="grid grid-cols-12 gap-6">
+        {/* Left/Stats Section */}
+        <div className="col-span-3">
+          <Card className="mb-6">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg font-medium">التسجيلات</CardTitle>
+            </CardHeader>
+            <CardContent className="py-0">
+              <div className="space-y-8">
+                {/* Empty state for registrations */}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <TabsContent value="overview" className="mt-4">
-          <div className="grid grid-cols-12 gap-4 rtl">
-            {/* KPIs Row */}
-            <div className="col-span-12 grid grid-cols-6 gap-4">
-              <StatCard
-                title="النقاط"
-                value={currentKPIs.pointsDistributed}
-                icon="/icons/points-rewards.svg"
-                iconAlt="Points Icon"
-                trend={currentKPIs.pointsDistributedTrend}
-                trendLabel="مقارنة بالفترة السابقة"
-                className="col-span-2"
-              />
-              <StatCard
-                title="الاستبدال"
-                value={currentKPIs.pointsRedeemed}
-                icon="/icons/points-rewards.svg"
-                iconAlt="Points Icon"
-                trend={currentKPIs.pointsRedeemedTrend}
-                trendLabel="مقارنة بالفترة السابقة"
-                className="col-span-2"
-              />
-              <StatCard
-                title="العملاء"
-                value={currentKPIs.activeCustomers}
-                icon="/icons/customers.svg"
-                iconAlt="Customers Icon"
-                trend={currentKPIs.activeCustomersTrend}
-                trendLabel="مقارنة بالفترة السابقة"
-                className="col-span-2"
-              />
-              <StatCard
-                title="المبيعات"
-                value={
-                  <>
-                    {currentKPIs.loyaltySales.toLocaleString()} <CurrencySymbol />
-                  </>
-                }
-                icon="/icons/dashboard-icon.svg"
-                iconAlt="Sales Icon"
-                trend={currentKPIs.loyaltySalesTrend}
-                trendLabel="مقارنة بالفترة السابقة"
-                className="col-span-2"
-              />
-              <StatCard
-                title="العودة"
-                value={currentKPIs.repurchaseRate}
-                icon="/icons/referral.svg"
-                iconAlt="Repurchase Icon"
-                trend={currentKPIs.repurchaseRateTrend}
-                trendLabel="مقارنة بالفترة السابقة"
-                className="col-span-2"
-              />
-              <StatCard
-                title="التفاعل"
-                value={currentKPIs.engagementRate}
-                icon="/icons/engagement-icon.png"
-                iconAlt="Engagement Icon"
-                trend={currentKPIs.engagementRateTrend}
-                trendLabel="مقارنة بالفترة السابقة"
-                className="col-span-2"
-              />
-            </div>
-
-            {/* Charts Row */}
-            <div className="col-span-8 grid grid-cols-2 gap-4">
-              <Card className="col-span-2 border border-gray-200 rounded-[24px]">
-                <CardContent className="p-5">
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-base font-normal text-gray-700">المبيعات</h2>
-                    <Tabs value={salesChartPeriod} onValueChange={setSalesChartPeriod} dir="rtl">
-                      <TabsList className="bg-gray-100 rounded-full">
-                        <TabsTrigger
-                          value="daily"
-                          className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-600"
-                        >
-                          يومي
-                        </TabsTrigger>
-                        <TabsTrigger
-                          value="weekly"
-                          className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-600"
-                        >
-                          أسبوعي
-                        </TabsTrigger>
-                        <TabsTrigger
-                          value="monthly"
-                          className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-600"
-                        >
-                          شهري
-                        </TabsTrigger>
-                        <TabsTrigger
-                          value="yearly"
-                          className="rounded-full data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-600"
-                        >
-                          سنوي
-                        </TabsTrigger>
-                      </TabsList>
-                    </Tabs>
-                  </div>
-                  <div className="h-80 rtl-chart">
-                    <BarChart data={currentChartData.sales} />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Customer Stats Card */}
-              <div className="col-span-1">
-                <CustomersStatsCard title="العملاء" icon="/icons/customers.svg" />
+        {/* Middle Section */}
+        <div className="col-span-6">
+          {/* Growth Section */}
+          <Card className="mb-6">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div className="flex items-center justify-between w-full">
+                <CardTitle className="text-lg font-medium">النمو</CardTitle>
+                <MoreHorizontal className="h-5 w-5 text-gray-400" />
               </div>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4">
+                <Badge className="bg-blue-100 text-blue-600 hover:bg-blue-100">شهرية</Badge>
+                <div className="mt-4 text-sm text-gray-500">التحديث الأخير ٢٨ يوليو ٢٠٢٥</div>
+              </div>
+            </CardContent>
+          </Card>
 
-              <Card className="border border-gray-200 rounded-[24px]">
-                <CardContent className="p-5">
-                  <h2 className="text-base font-normal text-gray-700 mb-6">المكافآت</h2>
-                  <div className="h-64 rtl-chart">
-                    <BarChart data={currentChartData.rewards} horizontal />
+          {/* Product Section */}
+          <Card className="mb-6">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div className="flex items-center justify-between w-full">
+                <CardTitle className="text-lg font-medium">المنتج الأفضل مبيعاً</CardTitle>
+                <div className="flex">
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <ChevronLeft className="h-5 w-5" />
+                  </Button>
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <ChevronRight className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-between items-center py-4">
+                <div>
+                  <h3 className="text-xl font-bold">اسم المنتج</h3>
+                </div>
+                <div className="flex text-center">
+                  <div className="px-4">
+                    <p className="text-gray-500 mb-1">المبيعات</p>
+                    <p className="text-3xl font-bold text-blue-500">000</p>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="px-4">
+                    <p className="text-gray-500 mb-1">المخزون</p>
+                    <p className="text-3xl font-bold">000</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-              <Card className="col-span-2 border border-gray-200 rounded-[24px]">
-                <CardContent className="p-5">
-                  <h2 className="text-base font-normal text-gray-700 mb-6">النقاط</h2>
-                  <div className="h-80 rtl-chart">
-                    <DoubleBarChart data={currentChartData.points} />
+        {/* Right Section */}
+        <div className="col-span-3">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 gap-6 mb-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-lg font-medium">المبيعات</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm text-gray-500">قيمة المبيعات</div>
+                    <div className="text-2xl font-bold mt-1">{stats.totalRevenue} ريال</div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center">
+                    <BarChart3 className="h-8 w-8 text-blue-500" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-            {/* Right Sidebar */}
-            <div className="col-span-4 space-y-4">
-              {/* Smart Alerts */}
-              <Card className="border border-gray-200 rounded-[24px]">
-                <CardContent className="p-5">
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-base font-normal text-gray-700">التنبيهات</h2>
-                    <Button variant="ghost" className="text-blue-500 hover:bg-gray-100 rounded-full">
-                      عرض الكل
-                    </Button>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-lg font-medium">الطلبات</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm text-gray-500">عدد الطلبات</div>
+                    <div className="text-2xl font-bold mt-1">000</div>
                   </div>
-                  <div className="space-y-4">
-                    {smartAlertsData.map((alert) => (
-                      <Card key={alert.id} className="border border-gray-200 rounded-[24px]">
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-3">
-                            <div className="mt-1">{alert.icon}</div>
-                            <div className="flex-1">
-                              <h3 className="font-normal text-gray-700">{alert.title}</h3>
-                              <p className="text-sm text-gray-500 mt-1">{alert.description}</p>
-                              <Button
-                                className="mt-3 h-8 text-sm rounded-full"
-                                variant="outline"
-                                onClick={() => handleAlertAction(alert)}
-                              >
-                                {alert.action}
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-8 w-8 text-blue-500">
+                      <path fill="currentColor" d="M12 1.5l-8 4.5v6c0 5.5 3.3 10.4 8 12.5 4.7-2.1 8-7 8-12.5v-6l-8-4.5zM12 10.5v9c-3.6-1.8-6-5.8-6-9.5v-4.7l6-3.3 6 3.3v4.7h-6"/>
+                    </svg>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Actions */}
-              <Card className="border border-gray-200 rounded-[24px]">
-                <CardContent className="p-5">
-                  <h2 className="text-base font-normal text-gray-700 mb-6">إجراءات سريعة</h2>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button
-                      className="bg-blue-500 hover:bg-blue-600 rounded-full"
-                      onClick={() => handleQuickAction("reward")}
-                    >
-                      <Gift className="h-4 w-4 mr-2" />
-                      إنشاء مكافأة
-                    </Button>
-                    <Button
-                      className="bg-blue-500 hover:bg-blue-600 rounded-full"
-                      onClick={() => handleQuickAction("campaign")}
-                    >
-                      <Target className="h-4 w-4 mr-2" />
-                      إنشاء حملة
-                    </Button>
-                    <Button
-                      className="bg-blue-500 hover:bg-blue-600 rounded-full"
-                      onClick={() => handleQuickAction("challenge")}
-                    >
-                      <Award className="h-4 w-4 mr-2" />
-                      إضافة تحدي
-                    </Button>
-                    <Button
-                      className="bg-blue-500 hover:bg-blue-600 rounded-full"
-                      onClick={() => handleQuickAction("notification")}
-                    >
-                      <Bell className="h-4 w-4 mr-2" />
-                      إرسال إشعار
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Marketing Campaigns Summary */}
-              <Card className="border border-gray-200 rounded-[24px]">
-                <CardContent className="p-5">
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-base font-normal text-gray-700">الحملات</h2>
-                    <Button variant="ghost" className="text-blue-500 hover:bg-gray-100 rounded-full">
-                      عرض الكل
-                    </Button>
-                  </div>
-                  <div className="space-y-4">
-                    {campaignSummaryData.map((campaign) => (
-                      <div
-                        key={campaign.id}
-                        className="border-b border-gray-100 pb-4 last:border-0 last:pb-0 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"
-                        onClick={() => handleCampaignClick(campaign)}
-                      >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h3 className="font-normal text-gray-700">{campaign.name}</h3>
-                            <p className="text-sm text-gray-500">{campaign.type}</p>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-sm font-normal text-gray-700">فتح: {campaign.openRate}</span>
-                            <span className="text-sm text-gray-500 block">نقر: {campaign.clickRate}</span>
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <div className="flex justify-between text-xs text-gray-500 mb-1">
-                            <span>تم الإرسال: {campaign.sent}</span>
-                            <span>تم الفتح: {campaign.opened}</span>
-                            <span>تم النقر: {campaign.clicked}</span>
-                          </div>
-                          <Progress
-                            value={(campaign.clicked / campaign.sent) * 100}
-                            className="h-1.5 bg-gray-100"
-                            indicatorClassName="bg-blue-500"
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="points" className="mt-4">
-          <div className="grid grid-cols-1 gap-4">
-            <Card className="border border-gray-200 rounded-[24px]">
-              <CardContent className="p-5">
-                <h2 className="text-lg font-normal text-gray-700 mb-6">النقاط</h2>
-                {/* Content for Points & Rewards tab */}
-                <p className="text-gray-500">محتوى تفصيلي عن النقاط والمكافآت سيظهر هنا...</p>
+                </div>
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
+        </div>
 
-        <TabsContent value="customers" className="mt-4">
-          <div className="grid grid-cols-1 gap-4">
-            <Card className="border border-gray-200 rounded-[24px]">
-              <CardContent className="p-5">
-                <h2 className="text-lg font-normal text-gray-700 mb-6">العملاء</h2>
-                {/* Content for Customers tab */}
-                <p className="text-gray-500">محتوى تفصيلي عن العملاء سيظهر هنا...</p>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="marketing" className="mt-4">
-          <div className="grid grid-cols-1 gap-4">
-            <Card className="border border-gray-200 rounded-[24px]">
-              <CardContent className="p-5">
-                <h2 className="text-lg font-normal text-gray-700 mb-6">التسويق</h2>
-                {/* Content for Marketing tab */}
-                <p className="text-gray-500">محتوى تفصيلي عن التسويق سيظهر هنا...</p>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-
-      {/* Welcome Dialog */}
-      <Dialog open={showWelcomeDialog} onOpenChange={setShowWelcomeDialog}>
-        <DialogContent className="sm:max-w-[500px] border border-gray-200 shadow-none rounded-[24px]">
-          <DialogHeader>
-            <DialogTitle className="text-right text-gray-700 font-normal">مرحباً بك في BOND.IT</DialogTitle>
-            <DialogDescription className="text-right">نظام الولاء الأمثل للمتاجر الإلكترونية</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <p className="text-right text-sm text-gray-600">
-              مرحباً بك في لوحة تحكم BOND.IT! يمكنك الآن استكشاف جميع الميزات المتاحة.
-            </p>
-            <p className="text-right text-sm text-gray-600">
-              انقر على أي عنصر في اللوحة للحصول على مزيد من التفاصيل والإحصائيات.
-            </p>
-          </div>
-          <div className="flex justify-end">
-            <Button
-              className="bg-blue-500 hover:bg-blue-600 transition-colors text-sm h-8 rounded-full"
-              onClick={() => setShowWelcomeDialog(false)}
-            >
-              ابدأ الآن
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Action Dialog */}
-      <Dialog open={showActionDialog} onOpenChange={setShowActionDialog}>
-        <DialogContent className="sm:max-w-[500px] border border-gray-200 shadow-none rounded-[24px] rtl">
-          <DialogHeader>
-            <DialogTitle className="text-right text-gray-700 font-normal">{currentAction?.title}</DialogTitle>
-            <DialogDescription className="text-right">{currentAction?.description}</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-right block">
-                الاسم
-              </Label>
-              <Input id="name" placeholder="أدخل الاسم" className="text-right" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-right block">
-                الوصف
-              </Label>
-              <Textarea id="description" placeholder="أدخل الوصف" className="text-right" />
-            </div>
-          </div>
-          <DialogFooter className="flex justify-between sm:justify-between">
-            <Button variant="outline" onClick={() => setShowActionDialog(false)} className="rounded-full">
-              إلغاء
-            </Button>
-            <Button
-              className="bg-blue-500 hover:bg-blue-600 transition-colors rounded-full"
-              onClick={currentAction?.onSubmit}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "جاري التنفيذ..." : "تنفيذ"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Campaign Details Dialog */}
-      <Dialog open={showCampaignDetails} onOpenChange={setShowCampaignDetails}>
-        <DialogContent className="sm:max-w-[600px] border border-gray-200 shadow-none rounded-[24px] rtl">
-          <DialogHeader>
-            <DialogTitle className="text-right text-gray-700 font-normal">تفاصيل الحملة</DialogTitle>
-          </DialogHeader>
-          {selectedCampaign && (
-            <div className="space-y-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">اسم الحملة</p>
-                  <p className="font-medium">{selectedCampaign.name}</p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">نوع الحملة</p>
-                  <p className="font-medium">{selectedCampaign.type}</p>
+        {/* Analytics Chart Section - Full Width */}
+        <div className="col-span-12">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-lg font-medium">إحصائيات</CardTitle>
+              <div className="flex space-x-2 space-x-reverse">
+                <Badge className="bg-blue-500 text-white">أسبوعي</Badge>
+                <Badge className="bg-gray-200 text-gray-500">شهري</Badge>
+                <Badge className="bg-gray-200 text-gray-500">سنوي</Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="w-full aspect-[3/1]">
+                <div className="flex items-end justify-between h-64">
+                  {chartData.slice(0, 10).map((item, index) => (
+                    <div key={index} className="flex flex-col items-center">
+                      <div 
+                        className="w-4 bg-blue-500 rounded-t-sm" 
+                        style={{ height: `${item.value * 0.6}%` }}
+                      />
+                      <span className="text-xs mt-2 text-gray-500">{item.day.split(' ')[1]}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-sm text-gray-500">عنوان الرسالة</p>
-                <p className="font-medium">{selectedCampaign.details.subject}</p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-sm text-gray-500">محتوى الرسالة</p>
-                <p className="font-medium">{selectedCampaign.details.content}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">الجمهور المستهدف</p>
-                  <p className="font-medium">{selectedCampaign.details.audience}</p>
-                </div>
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm text-gray-500">تاريخ الإرسال</p>
-                  <p className="font-medium">{selectedCampaign.details.date}</p>
-                </div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-sm text-gray-500">الإحصائيات</p>
-                <div className="grid grid-cols-3 gap-2 mt-2">
-                  <div className="bg-white p-2 rounded-lg text-center">
-                    <p className="text-xs text-gray-500">تم الإرسال</p>
-                    <p className="font-medium">{selectedCampaign.sent}</p>
+
+              <div className="flex mt-8 justify-between">
+                <div>
+                  <span className="text-sm text-gray-500">الربح</span>
+                  <div className="flex items-center mt-1">
+                    <span className="text-xl font-bold">0000</span>
+                    <span className="flex items-center text-green-500 text-sm mr-2">
+                      <ArrowUp className="h-4 w-4 mr-1" />
+                      10%
+                    </span>
                   </div>
-                  <div className="bg-white p-2 rounded-lg text-center">
-                    <p className="text-xs text-gray-500">تم الفتح</p>
-                    <p className="font-medium">
-                      {selectedCampaign.opened} ({selectedCampaign.openRate})
-                    </p>
-                  </div>
-                  <div className="bg-white p-2 rounded-lg text-center">
-                    <p className="text-xs text-gray-500">تم النقر</p>
-                    <p className="font-medium">
-                      {selectedCampaign.clicked} ({selectedCampaign.clickRate})
-                    </p>
+                </div>
+                <div>
+                  <span className="text-sm text-gray-500">الدخل</span>
+                  <div className="flex items-center mt-1">
+                    <span className="text-xl font-bold">0000</span>
+                    <span className="flex items-center text-red-500 text-sm mr-2">
+                      <ArrowDown className="h-4 w-4 mr-1" />
+                      5%
+                    </span>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-          <DialogFooter>
-            <Button
-              className="bg-blue-500 hover:bg-blue-600 transition-colors rounded-full"
-              onClick={() => setShowCampaignDetails(false)}
-            >
-              إغلاق
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Active Campaigns Section */}
+        <div className="col-span-12">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-lg font-medium">الحملات النشطة</CardTitle>
+              <Button variant="ghost" size="sm" className="text-blue-500">
+                المزيد
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {/* Empty state or campaign list would go here */}
+              <div className="py-8 text-center text-gray-500">
+                لا توجد حملات نشطة حالياً
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }
