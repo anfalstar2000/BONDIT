@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/db";
 
 export interface Challenge {
   id: string;
@@ -96,6 +97,47 @@ const mockChallenges: Challenge[] = [
   }
 ];
 
+// GET all challenges
 export async function GET() {
-  return NextResponse.json(mockChallenges);
+  try {
+    const challenges = await prisma.challenge.findMany();
+    return NextResponse.json(challenges);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch challenges" },
+      { status: 500 }
+    );
+  }
+}
+
+// POST - create a new challenge
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { title, description, points } = body;
+    
+    // Validate input
+    if (!title || !description || typeof points !== 'number') {
+      return NextResponse.json(
+        { error: "Missing required fields or invalid data" },
+        { status: 400 }
+      );
+    }
+    
+    // Create challenge
+    const challenge = await prisma.challenge.create({
+      data: {
+        title,
+        description,
+        points,
+      },
+    });
+    
+    return NextResponse.json(challenge, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to create challenge" },
+      { status: 500 }
+    );
+  }
 } 
